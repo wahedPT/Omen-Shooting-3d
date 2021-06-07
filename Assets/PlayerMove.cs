@@ -8,11 +8,13 @@ public class PlayerMove : MonoBehaviour
     public float speed;
     public float jumpSpeed;
     Animator anim;
+    
 
     void Start()
     {
         
         anim = GetComponent<Animator>();
+       
     }
 
     // Update is called once per frame
@@ -27,46 +29,37 @@ public class PlayerMove : MonoBehaviour
 
         float xvalue = Input.GetAxis("Horizontal");
         float Yvalue = Input.GetAxis("Vertical");
-
+        //0.0 key is not pressed
+        //only 1 check 
         if (Mathf.Abs(Yvalue) > 0.0)
         {
             transform.Translate(new Vector3(0, 0, Yvalue * speed * Time.deltaTime));
-            //anim.SetBool("isRun", true);
-            //anim.SetBool("isIdle", false);
-
-            //if (Yvalue > 0.0)
-            //{
-            //    anim.SetBool("isRun", true);
-            //}
-            //else
-            //{
-            //    anim.SetBool("backWalk", true);
-            //}
+           
         }
-        else
-        {
-            //anim.SetBool("isRun", false);
-        }
+     
 
         if (Mathf.Abs(xvalue) > 0.0)
         {
             transform.Translate(new Vector3(xvalue * speed * Time.deltaTime, 0, 0));
-            //anim.SetBool("leftWalk", true);
-            //anim.SetBool("isIdle", false);
-
-            //if (xvalue > 0.0)
-            //{
-            //    //right anim
-            //}
-            //else
-            //{
-            //    //left anim
-            //}
+           
         }
 
         anim.SetFloat("XAxis", xvalue);
         anim.SetFloat("YAxis", Yvalue);
 
+
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            this.GetComponent<Rigidbody>().AddForce(new Vector3(0, jumpSpeed, 0));
+        }
+        
+        
+        //object pooling wahed 
+        //player movement wahed
+        //envi wahed
+        //bullet wahed
+        //animation wahed
         //if (Input.GetKey(KeyCode.W))
         //{
         //    transform.Translate(new Vector3(0, 0, speed * Time.deltaTime));
@@ -97,27 +90,7 @@ public class PlayerMove : MonoBehaviour
         //    anim.SetBool("isIdle", true);
         //    anim.SetBool("isRun", false);
         //}
-        //if(Input.get)
-
-
-
-        //else
-        //{
-        //    anim.SetTrigger("idle");
-        //}
-
-        //    if (Input.GetKey(KeyCode.S))
-        //{
-
-        //}
-        //if (Input.GetKey(KeyCode.A))
-        //{
-        //    transform.Translate(new Vector3(-speed * Time.deltaTime, 0, 0));
-        //}
-        //if (Input.GetKey(KeyCode.D))
-        //{
-        //    transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0));
-        //}
+       
     }
     
 }

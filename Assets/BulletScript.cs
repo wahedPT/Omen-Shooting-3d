@@ -5,12 +5,20 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     public GameObject BulletPrefab;
-    public float bulletSpeed;
+    [SerializeField]
+    private float bulletSpeed = 500;
 
-    //List<GameObject> bulletList;
+    List<GameObject> bulletList;
     // Start is called before the first frame update
     void Start()
     {
+        bulletList = new List<GameObject>();
+        for(int i =0; i < 20; i++)
+        {//in this list am adding 20 bullets and making all the bullets false
+            GameObject bulletobj = Instantiate(BulletPrefab, transform.GetChild(1).position, transform.rotation);
+            bulletobj.SetActive(false);
+            bulletList.Add(bulletobj);
+        }
         //for(int i = 0; i < 20; i++)
         //{
         //    GameObject bulletobj = Instantiate(BulletPrefab, transform.GetChild(1).position, transform.rotation);
@@ -25,30 +33,29 @@ public class BulletScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            GameObject bulletobj = Instantiate(BulletPrefab, transform.GetChild(1).position, transform.rotation);
+            for(int i = 0; i < bulletList.Count; i++)
+            {
+                //if my bullet is active in hierarchy it is in use
+                //going to use next bullet in the pool
+                //the bullet which is not in use break it
+                if(bulletList[i].activeInHierarchy==false)
+                {
+                    bulletList[i].transform.position = transform.GetChild(1).position;
+                    bulletList[i].transform.rotation = transform.GetChild(1).rotation;
+                    bulletList[i].SetActive(true);
+                    Rigidbody rb = bulletList[i].GetComponent<Rigidbody>();
+                    rb.AddForce(bulletList[i].transform.forward * bulletSpeed);
+                    break;
+                }
+            }
+
+           /* GameObject bulletobj = Instantiate(BulletPrefab, transform.GetChild(1).position, transform.rotation);
             bulletobj.transform.position = transform.GetChild(1).position;
             Rigidbody rb = bulletobj.GetComponent<Rigidbody>();
-            rb.AddForce(bulletobj.transform.forward * bulletSpeed);
+            rb.AddForce(bulletobj.transform.forward * bulletSpeed);*/
         }
 
 
-        //    if (Input.GetMouseButtonDown(0))
-        //    {
-        //        for (int i = 0; i < 20; i++)
-        //        {
-        //            if(bulletList[i].activeInHierarchy == false)
-        //            {
-        //                bulletList[i].SetActive(true);
-        //                bulletList[i].transform.position = transform.GetChild(1).position;
-        //                bulletList[i].transform.rotation = transform.GetChild(1).rotation;
-        //                Rigidbody rb = bulletList[i].GetComponent<Rigidbody>();
-        //                rb.AddForce(bulletList[i].transform.forward * bulletSpeed);
-        //            }
-        //        }
-        //        //bulletobj.transform.position = transform.GetChild(1).position;
-        //        //Rigidbody rb = bulletobj.GetComponent<Rigidbody>();
-        //        //rb.AddForce(bulletobj.transform.forward * bulletSpeed);
-
-        //}
+        
     }
 }
