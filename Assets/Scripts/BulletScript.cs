@@ -14,18 +14,12 @@ public class BulletScript : MonoBehaviour
     {
         bulletList = new List<GameObject>();
         for(int i =0; i < 20; i++)
-        {//in this list am adding 20 bullets and making all the bullets false
+        {
             GameObject bulletobj = Instantiate(BulletPrefab, transform.GetChild(1).position, transform.rotation);
             bulletobj.SetActive(false);
             bulletList.Add(bulletobj);
         }
-        //for(int i = 0; i < 20; i++)
-        //{
-        //    GameObject bulletobj = Instantiate(BulletPrefab, transform.GetChild(1).position, transform.rotation);
-
-        //    bulletList.Add(bulletobj);
-        //    bulletList[i].SetActive(false);
-        //}
+       
     }
 
     // Update is called once per frame
